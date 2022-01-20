@@ -28,13 +28,9 @@ public class TransacaoService {
 
     public TransacaoDTO saveTransacao(TransacaoDTO transacaoDTO) throws TransacaoRepeteadException {
         Transacao transacao = transacaoMapper.toEntity(transacaoDTO);
-        Month mes = transacao.getData().getMonth();
-        Integer ano = transacao.getData().getYear();
-        String descricao = transacao.getDescricao();
-        TipoOrcamento tipo = transacao.getTipoOrcamento();
 
-        if (isDescriptionRepetead(descricao, tipo, mes, ano)) {
-            throw new TransacaoRepeteadException(descricao);
+        if (isDescriptionRepetead(transacao)) {
+            throw new TransacaoRepeteadException(transacao.getDescricao());
         }
         Transacao savedTransacao = transacaoRepository.save(transacao);
         return transacaoMapper.toDTO(savedTransacao);
@@ -74,7 +70,13 @@ public class TransacaoService {
                 .orElseThrow(() -> new TransacaoNotFoundException(id.toString()));
     }
 
-    private Boolean isDescriptionRepetead(String descricao, TipoOrcamento tipo, Month mes, Integer ano) {
+    private Boolean isDescriptionRepetead(Transacao transToSearch) {
+        Long id = transToSearch.getId();
+        Month mes = transToSearch.getData().getMonth();
+        Integer ano = transToSearch.getData().getYear();
+        String descricao = transToSearch.getDescricao();
+        TipoOrcamento tipo = transToSearch.getTipoOrcamento();
+
         ArrayList<Transacao> transacao = transacaoRepository.findByDescricao(descricao);
         if(transacao.isEmpty()) {
             return Boolean.FALSE;
@@ -88,7 +90,7 @@ public class TransacaoService {
                 .findFirst()
                 .orElse(null);
 
-        if (existeOrcamento == null) {
+        if (existeOrcamento == null || id == existeOrcamento.getId()) {
             return Boolean.FALSE;
         }
         return Boolean.TRUE;
