@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  docker-postgres:
+    image: postgres:14.1-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=orcamento
+      - POSTGRES_PASSWORD=aluraChallenge
+      - POSTGRES_DB=orcamento
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+      - ./data/migrations/1-DDL.sql:/docker-entrypoint-initdb.d/1-ddl.sql
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    depends_on:
+      - docker-postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
