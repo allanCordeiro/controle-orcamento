@@ -5,17 +5,17 @@ Projeto Alura Challenge Backend para construção de uma API Rest para controle 
 Informações sobre o desafio: https://www.alura.com.br/challenges/back-end-2/semana-01-api-rest
 
  ## Semana 1
-    - [X] Definição de stack
-    - [X] Construir e expor CRUD via API Rest
-    - [ ] Testes unitários via Postman
+- [X] Definição de stack
+- [X] Construir e expor CRUD via API Rest
+- [ ] Testes unitários via Postman
  ## Semana 2
-    TBD
+TBD
  ## Semana 3
-    TBD
+TBD
  ## Semana 4
-    TBD
+TBD
 
 ## Stack
-    - Java 11;
-    - Springboot;
-    - PostegreSQL 14;
+- Java 11;
+- Springboot;
+- PostegreSQL 14;
