@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,10 +29,11 @@ public class TransacaoService {
     public TransacaoDTO saveTransacao(TransacaoDTO transacaoDTO) throws TransacaoRepeteadException {
         Transacao transacao = transacaoMapper.toEntity(transacaoDTO);
         Month mes = transacao.getData().getMonth();
+        Integer ano = transacao.getData().getYear();
         String descricao = transacao.getDescricao();
         TipoOrcamento tipo = transacao.getTipoOrcamento();
 
-        if (isDescriptionRepetead(descricao, tipo, mes)) {
+        if (isDescriptionRepetead(descricao, tipo, mes, ano)) {
             throw new TransacaoRepeteadException(descricao);
         }
         Transacao savedTransacao = transacaoRepository.save(transacao);
@@ -72,7 +74,7 @@ public class TransacaoService {
                 .orElseThrow(() -> new TransacaoNotFoundException(id.toString()));
     }
 
-    private Boolean isDescriptionRepetead(String descricao, TipoOrcamento tipo, Month mes) {
+    private Boolean isDescriptionRepetead(String descricao, TipoOrcamento tipo, Month mes, Integer ano) {
         ArrayList<Transacao> transacao = transacaoRepository.findByDescricao(descricao);
         if(transacao.isEmpty()) {
             return Boolean.FALSE;
@@ -80,7 +82,8 @@ public class TransacaoService {
         Transacao existeOrcamento = transacao.stream()
                 .filter((fo) ->
                         tipo.equals(fo.getTipoOrcamento()) &&
-                        mes == LocalDate.parse(fo.getData().toString()).getMonth()
+                        mes == LocalDate.parse(fo.getData().toString()).getMonth() &&
+                        ano == fo.getData().getYear()
                         )
                 .findFirst()
                 .orElse(null);
