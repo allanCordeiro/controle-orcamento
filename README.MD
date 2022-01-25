@@ -9,7 +9,14 @@ Informações sobre o desafio: https://www.alura.com.br/challenges/back-end-2/se
 - [X] Construir e expor CRUD via API Rest
 - [X] Testes unitários via Postman
  ## Semana 2
-TBD
+- [X] Inserir a coluna categoria no banco de dados
+- [X] Considerar a categorização de despesas
+- [X] Criar @RequestParam para busca com querystring no endpoint de receitas por descrição
+- [X] Criar @RequestParam para busca com querystring no endpoint de despesas por descrição
+- [ ] Permitir busca de despesas por mês
+- [ ] Permitir busca de receitas por mês
+- [ ] Criar endpoint de resumo por mês
+- [ ] Criação de testes automatizados
  ## Semana 3
 TBD
  ## Semana 4
