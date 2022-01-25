@@ -1,5 +1,6 @@
 package io.allancordeiro.controleorcamento.transacoes.entities;
 
+import io.allancordeiro.controleorcamento.transacoes.enums.Categoria;
 import io.allancordeiro.controleorcamento.transacoes.enums.TipoOrcamento;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,9 @@ public class Transacao {
 
     @Column(nullable = false)
     private String descricao;
+
+    @Enumerated(EnumType.STRING)
+    private Categoria categoria;
 
     @Column(nullable = false)
     private Float valor;

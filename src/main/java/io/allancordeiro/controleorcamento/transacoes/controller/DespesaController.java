@@ -1,6 +1,7 @@
 package io.allancordeiro.controleorcamento.transacoes.controller;
 
 import io.allancordeiro.controleorcamento.transacoes.dto.TransacaoDTO;
+import io.allancordeiro.controleorcamento.transacoes.enums.Categoria;
 import io.allancordeiro.controleorcamento.transacoes.enums.TipoOrcamento;
 import io.allancordeiro.controleorcamento.transacoes.exception.TransacaoNotFoundException;
 import io.allancordeiro.controleorcamento.transacoes.exception.TransacaoRepeteadException;
@@ -22,6 +23,9 @@ public class DespesaController {
     @ResponseStatus(HttpStatus.CREATED)
     public TransacaoDTO createDespesa(@RequestBody @Valid TransacaoDTO transacaoDTO) throws TransacaoRepeteadException {
         transacaoDTO.setTipoOrcamento(TipoOrcamento.DESPESA);
+        if(transacaoDTO.getCategoria() == null) {
+            transacaoDTO.setCategoria(Categoria.OUTRAS);
+        }
         return transacaoService.saveTransacao(transacaoDTO);
     }
 
@@ -43,6 +47,11 @@ public class DespesaController {
         transacao.setDescricao(transUpdated.getDescricao());
         transacao.setValor(transUpdated.getValor());
         transacao.setData(transUpdated.getData());
+        if (transUpdated.getCategoria() == null) {
+            transacao.setCategoria(Categoria.OUTRAS);
+        } else {
+            transacao.setCategoria(transUpdated.getCategoria());
+        }
 
         return transacaoService.saveTransacao(transacao);
     }
