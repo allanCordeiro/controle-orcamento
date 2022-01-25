@@ -30,7 +30,11 @@ public class DespesaController {
     }
 
     @GetMapping
-    public List<TransacaoDTO> listDespesas() {
+    public List<TransacaoDTO> listDespesas(
+            @RequestParam(name="descricao", required = false) String description) {
+        if(description != null && !description.isEmpty()) {
+            return transacaoService.listByDescription(description, TipoOrcamento.DESPESA);
+        }
         return transacaoService.listAll(TipoOrcamento.DESPESA);
     }
 
