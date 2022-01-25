@@ -43,6 +43,14 @@ public class TransacaoService {
                 .collect(Collectors.toList());
     }
 
+    public List<TransacaoDTO> listByDescription(String description, TipoOrcamento tipo) {
+        return transacaoRepository.findByDescricao(description)
+                .stream()
+                .filter((fo) -> tipo.equals(fo.getTipoOrcamento()))
+                .map(transacaoMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
     public TransacaoDTO findById(Long id, TipoOrcamento tipoOrcamento) throws TransacaoNotFoundException {
         Transacao transacao = this.isTransacaoExists(id);
         if (this.isCorrectTipoOrcamento(transacao, tipoOrcamento)) {
@@ -84,8 +92,8 @@ public class TransacaoService {
         Transacao existeOrcamento = transacao.stream()
                 .filter((fo) ->
                         tipo.equals(fo.getTipoOrcamento()) &&
-                        mes == LocalDate.parse(fo.getData().toString()).getMonth() &&
-                        ano == fo.getData().getYear()
+                        mes.equals(LocalDate.parse(fo.getData().toString()).getMonth()) &&
+                        ano.equals(fo.getData().getYear())
                         )
                 .findFirst()
                 .orElse(null);

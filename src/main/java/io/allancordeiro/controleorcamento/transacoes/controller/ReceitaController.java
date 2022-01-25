@@ -27,9 +27,14 @@ public class ReceitaController {
     }
 
     @GetMapping
-    public List<TransacaoDTO> listReceitas() {
+    public List<TransacaoDTO> listReceitas(
+            @RequestParam(name="descricao", required=false) String description) {
+        if(description != null && !description.isEmpty()) {
+            return transacaoService.listByDescription(description, TipoOrcamento.RECEITA);
+        }
         return transacaoService.listAll(TipoOrcamento.RECEITA);
     }
+
 
     @GetMapping("/{id}")
     public TransacaoDTO getReceita(@PathVariable Long id) throws TransacaoNotFoundException {
