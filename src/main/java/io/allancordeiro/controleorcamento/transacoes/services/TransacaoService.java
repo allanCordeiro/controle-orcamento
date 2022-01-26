@@ -8,7 +8,9 @@ import io.allancordeiro.controleorcamento.transacoes.exception.TransacaoRepetead
 import io.allancordeiro.controleorcamento.transacoes.mapper.TransacaoMapper;
 import io.allancordeiro.controleorcamento.transacoes.repositories.TransacaoRepository;
 import lombok.AllArgsConstructor;
+import org.hibernate.type.IntegerType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Indexed;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.Month;
@@ -47,6 +49,16 @@ public class TransacaoService {
         return transacaoRepository.findByDescricao(description)
                 .stream()
                 .filter((fo) -> tipo.equals(fo.getTipoOrcamento()))
+                .map(transacaoMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<TransacaoDTO> listByPeriod(TipoOrcamento tipo, Integer year, Month month) {
+        return transacaoRepository.findByTipoOrcamento(tipo)
+                .stream()
+                .filter((fo) -> tipo.equals(fo.getTipoOrcamento()) &&
+                        year.equals(fo.getData().getYear()) &&
+                        month.equals(fo.getData().getMonth()))
                 .map(transacaoMapper::toDTO)
                 .collect(Collectors.toList());
     }
