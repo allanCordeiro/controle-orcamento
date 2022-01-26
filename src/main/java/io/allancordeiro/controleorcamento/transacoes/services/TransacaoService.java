@@ -8,22 +8,17 @@ import io.allancordeiro.controleorcamento.transacoes.exception.TransacaoRepetead
 import io.allancordeiro.controleorcamento.transacoes.mapper.TransacaoMapper;
 import io.allancordeiro.controleorcamento.transacoes.repositories.TransacaoRepository;
 import lombok.AllArgsConstructor;
-import org.hibernate.type.IntegerType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Indexed;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-
 public class TransacaoService {
     private final TransacaoRepository transacaoRepository;
     private final TransacaoMapper transacaoMapper = TransacaoMapper.INSTANCE;
@@ -110,7 +105,7 @@ public class TransacaoService {
                 .findFirst()
                 .orElse(null);
 
-        if (existeOrcamento == null || id == existeOrcamento.getId()) {
+        if (existeOrcamento == null || id.equals(existeOrcamento.getId())) {
             return Boolean.FALSE;
         }
         return Boolean.TRUE;

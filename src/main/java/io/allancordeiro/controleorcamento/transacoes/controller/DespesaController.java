@@ -24,7 +24,7 @@ public class DespesaController {
     @ResponseStatus(HttpStatus.CREATED)
     public TransacaoDTO createDespesa(@RequestBody @Valid TransacaoDTO transacaoDTO) throws TransacaoRepeteadException {
         transacaoDTO.setTipoOrcamento(TipoOrcamento.DESPESA);
-        if(transacaoDTO.getCategoria() == null) {
+        if(transacaoDTO.getCategoria() == null || transacaoDTO.getCategoria().toString().equals("")) {
             transacaoDTO.setCategoria(Categoria.OUTRAS);
         }
         return transacaoService.saveTransacao(transacaoDTO);
