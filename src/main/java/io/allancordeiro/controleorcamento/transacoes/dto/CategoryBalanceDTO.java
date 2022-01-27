@@ -1,5 +1,6 @@
 package io.allancordeiro.controleorcamento.transacoes.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.allancordeiro.controleorcamento.transacoes.enums.Categoria;
 import lombok.*;
 
@@ -8,6 +9,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryBalanceDTO {
+    @JsonProperty("Categoria")
     private Categoria category;
-    private Long totalValue;
+    @JsonProperty("Valor Total")
+    private Float totalValue;
 }

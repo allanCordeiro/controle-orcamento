@@ -15,8 +15,7 @@ public enum Categoria {
     EDUCACAO("Educação"),
     LAZER("Lazer"),
     IMPREVISTOS("Imprevistos"),
-    OUTRAS("Outras"),
-    @JsonProperty("''") EMPTY("");
+    OUTRAS("Outras");
 
 
     private final String descricao;
