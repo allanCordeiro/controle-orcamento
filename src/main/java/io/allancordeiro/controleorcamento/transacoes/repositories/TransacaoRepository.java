@@ -13,5 +13,5 @@ public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
     @Query(nativeQuery = true,
             value = "SELECT * FROM transacao WHERE EXTRACT(YEAR FROM data) = ?1"
                     + " AND EXTRACT(MONTH FROM data) = ?2")
-    ArrayList<Transacao> findByPeriod(String year, String month);
+    ArrayList<Transacao> findByPeriod(Integer year, Integer month);
 }

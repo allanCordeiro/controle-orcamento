@@ -16,7 +16,7 @@ public class ResumoController {
     private final SummaryService summaryService;
 
     @GetMapping("/{ano}/{mes}")
-    public SummaryDTO getSummary(@PathVariable String ano, @PathVariable String mes) {
+    public SummaryDTO getSummary(@PathVariable Integer ano, @PathVariable Integer mes) {
         return summaryService.summaryByPeriod(ano, mes);
     }
 }
