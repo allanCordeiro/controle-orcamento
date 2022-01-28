@@ -15,7 +15,7 @@ Informações sobre o desafio: https://www.alura.com.br/challenges/back-end-2/se
 - [X] Criar @RequestParam para busca com querystring no endpoint de despesas por descrição
 - [X] Permitir busca de despesas por mês
 - [X] Permitir busca de receitas por mês
-- [ ] Criar endpoint de resumo por mês
+- [X] Criar endpoint de resumo por mês
 - [ ] Criação de testes automatizados
  ## Semana 3
 TBD
