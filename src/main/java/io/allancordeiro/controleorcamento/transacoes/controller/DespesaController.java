@@ -1,6 +1,7 @@
 package io.allancordeiro.controleorcamento.transacoes.controller;
 
 import io.allancordeiro.controleorcamento.transacoes.dto.TransacaoDTO;
+import io.allancordeiro.controleorcamento.transacoes.enums.Categoria;
 import io.allancordeiro.controleorcamento.transacoes.enums.TipoOrcamento;
 import io.allancordeiro.controleorcamento.transacoes.exception.TransacaoNotFoundException;
 import io.allancordeiro.controleorcamento.transacoes.exception.TransacaoRepeteadException;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.time.Month;
 import java.util.List;
 
 @RestController
@@ -22,17 +24,29 @@ public class DespesaController {
     @ResponseStatus(HttpStatus.CREATED)
     public TransacaoDTO createDespesa(@RequestBody @Valid TransacaoDTO transacaoDTO) throws TransacaoRepeteadException {
         transacaoDTO.setTipoOrcamento(TipoOrcamento.DESPESA);
+        if(transacaoDTO.getCategoria() == null || transacaoDTO.getCategoria().toString().equals("")) {
+            transacaoDTO.setCategoria(Categoria.OUTRAS);
+        }
         return transacaoService.saveTransacao(transacaoDTO);
     }
 
     @GetMapping
-    public List<TransacaoDTO> listDespesas() {
+    public List<TransacaoDTO> listDespesas(
+            @RequestParam(name="descricao", required = false) String description) {
+        if(description != null && !description.isEmpty()) {
+            return transacaoService.listByDescription(description, TipoOrcamento.DESPESA);
+        }
         return transacaoService.listAll(TipoOrcamento.DESPESA);
     }
 
     @GetMapping("/{id}")
     public TransacaoDTO getDespesa(@PathVariable Long id) throws TransacaoNotFoundException {
         return transacaoService.findById(id, TipoOrcamento.DESPESA);
+    }
+
+    @GetMapping("/{ano}/{mes}")
+    public List<TransacaoDTO> getDespesaPeriod(@PathVariable Integer ano, @PathVariable Integer mes) {
+        return transacaoService.listByPeriod(TipoOrcamento.DESPESA, ano, Month.of(mes));
     }
 
     @PutMapping("/{id}")
@@ -43,6 +57,11 @@ public class DespesaController {
         transacao.setDescricao(transUpdated.getDescricao());
         transacao.setValor(transUpdated.getValor());
         transacao.setData(transUpdated.getData());
+        if (transUpdated.getCategoria() == null) {
+            transacao.setCategoria(Categoria.OUTRAS);
+        } else {
+            transacao.setCategoria(transUpdated.getCategoria());
+        }
 
         return transacaoService.saveTransacao(transacao);
     }

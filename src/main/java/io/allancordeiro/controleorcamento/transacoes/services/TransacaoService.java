@@ -12,16 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-
 public class TransacaoService {
     private final TransacaoRepository transacaoRepository;
     private final TransacaoMapper transacaoMapper = TransacaoMapper.INSTANCE;
@@ -39,6 +36,24 @@ public class TransacaoService {
     public List<TransacaoDTO> listAll(TipoOrcamento tipoOrcamento) {
         return transacaoRepository.findByTipoOrcamento(tipoOrcamento)
                 .stream()
+                .map(transacaoMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<TransacaoDTO> listByDescription(String description, TipoOrcamento tipo) {
+        return transacaoRepository.findByDescricao(description)
+                .stream()
+                .filter((fo) -> tipo.equals(fo.getTipoOrcamento()))
+                .map(transacaoMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<TransacaoDTO> listByPeriod(TipoOrcamento tipo, Integer year, Month month) {
+        return transacaoRepository.findByTipoOrcamento(tipo)
+                .stream()
+                .filter((fo) -> tipo.equals(fo.getTipoOrcamento()) &&
+                        year.equals(fo.getData().getYear()) &&
+                        month.equals(fo.getData().getMonth()))
                 .map(transacaoMapper::toDTO)
                 .collect(Collectors.toList());
     }
@@ -84,13 +99,13 @@ public class TransacaoService {
         Transacao existeOrcamento = transacao.stream()
                 .filter((fo) ->
                         tipo.equals(fo.getTipoOrcamento()) &&
-                        mes == LocalDate.parse(fo.getData().toString()).getMonth() &&
-                        ano == fo.getData().getYear()
+                        mes.equals(LocalDate.parse(fo.getData().toString()).getMonth()) &&
+                        ano.equals(fo.getData().getYear())
                         )
                 .findFirst()
                 .orElse(null);
 
-        if (existeOrcamento == null || id == existeOrcamento.getId()) {
+        if (existeOrcamento == null || id.equals(existeOrcamento.getId())) {
             return Boolean.FALSE;
         }
         return Boolean.TRUE;

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.time.Month;
 import java.util.List;
 
 @RestController
@@ -27,14 +28,25 @@ public class ReceitaController {
     }
 
     @GetMapping
-    public List<TransacaoDTO> listReceitas() {
+    public List<TransacaoDTO> listReceitas(
+            @RequestParam(name="descricao", required=false) String description) {
+        if(description != null && !description.isEmpty()) {
+            return transacaoService.listByDescription(description, TipoOrcamento.RECEITA);
+        }
         return transacaoService.listAll(TipoOrcamento.RECEITA);
     }
+
 
     @GetMapping("/{id}")
     public TransacaoDTO getReceita(@PathVariable Long id) throws TransacaoNotFoundException {
         return transacaoService.findById(id, TipoOrcamento.RECEITA);
     }
+
+    @GetMapping("/{ano}/{mes}")
+    public List<TransacaoDTO> getReceitaPeriod(@PathVariable Integer ano, @PathVariable Integer mes) {
+        return transacaoService.listByPeriod(TipoOrcamento.RECEITA, ano, Month.of(mes));
+    }
+
 
     @PutMapping("/{id}")
     public TransacaoDTO updateReceita(@PathVariable Long id,

@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS transacao (
     id SERIAL PRIMARY KEY,
     tipo_orcamento VARCHAR(50) NOT NULL,
     descricao VARCHAR(200) NOT NULL,
+    categoria VARCHAR(50),
     valor DECIMAL(12,2) NOT NULL,
     data DATE NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
