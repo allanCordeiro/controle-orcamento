@@ -26,21 +26,4 @@ public class UsuarioController {
         return usuarioServices.saveUsuario(usuarioDTO);
     }
 
-    @GetMapping
-    public Optional<UsuarioDTO> getUsuario(@RequestParam String login,
-                                           @RequestParam String password) throws UserNotFoundException {
-        Optional<UsuarioDTO> usuarioDTO = usuarioServices.getUsuario(login);
-        if(usuarioDTO.isEmpty()) {
-            throw new UserNotFoundException();
-        }
-
-        if (!isPasswordCorrect(password, usuarioDTO.get().getPassword())) {
-            throw new UserNotFoundException();
-        }
-        return usuarioDTO;
-    }
-
-    private boolean isPasswordCorrect(String pwdTried, String pwdCorrect) {
-        return encoder.matches(pwdTried, pwdCorrect);
-    }
 }
