@@ -156,5 +156,6 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
-
+docker.env
+/data/postgres
 # End of https://www.toptal.com/developers/gitignore/api/maven,intellij,java
