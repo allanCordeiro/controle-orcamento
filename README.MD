@@ -17,10 +17,10 @@ Informações sobre o desafio: https://www.alura.com.br/challenges/back-end-2/se
 - [X] Permitir busca de receitas por mês
 - [X] Criar endpoint de resumo por mês
 - [ ] Criação de testes automatizados
- ## Semana 3
-TBD
- ## Semana 4
-TBD
+ ## Semana 3 e 4
+- [X] Processo de autorização e autenticação
+- [X] Deploy da aplicação
+
 
 ## Stack
 - Java 11;
