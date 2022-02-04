@@ -4,6 +4,8 @@ Projeto Alura Challenge Backend para construção de uma API Rest para controle 
 
 Informações sobre o desafio: https://www.alura.com.br/challenges/back-end-2/semana-01-api-rest
 
+*Swagger da aplicação: https://allan-controle-orcamento.herokuapp.com/swagger-ui.html*
+
  ## Semana 1
 - [X] Definição de stack
 - [X] Construir e expor CRUD via API Rest
