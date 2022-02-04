@@ -15,7 +15,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 
 import java.util.Arrays;
-git
+
 @Configuration
 public class SwaggerConfig {
 
@@ -30,7 +30,7 @@ public class SwaggerConfig {
                 .globalOperationParameters(Arrays.asList(
                         new ParameterBuilder()
                                 .name("Authorization")
-                                .description("Bearer token")
+                                .description("token. Type Bearer + token generated on jwt-authentication-filter endpoint")
                                 .modelRef(new ModelRef("string"))
                                 .parameterType("header")
                                 .required(false)
