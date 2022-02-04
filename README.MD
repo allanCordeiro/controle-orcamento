@@ -21,6 +21,11 @@ Informações sobre o desafio: https://www.alura.com.br/challenges/back-end-2/se
 - [X] Processo de autorização e autenticação
 - [X] Deploy da aplicação
 
+## Débito técnico
+- [X] Documentação no Swagger
+- [ ] Testes automatizados
+- [ ] Ajuste no controller de usuários
+- [ ] Ajuste no arquivo properties de DEV 
 
 ## Stack
 - Java 11;
